@@ -17,13 +17,15 @@ client = discord.Client()
 def _convert_isotime_to_local_time(string):
     return datetime.fromisoformat(string[:-1] + "+00:00").astimezone()
 
+
 def _get_emoji(name):
-    name = name.replace(' ', '').strip()
+    name = name.replace(" ", "").strip()
     emoji_list = [emoji for emoji in client.emojis if emoji.name == name]
     if len(emoji_list) == 0:
-        return ''
+        return ""
     else:
         return str(emoji_list[0])
+
 
 @client.event
 async def on_ready():
@@ -69,16 +71,18 @@ async def on_message(message):
             fixtures_list = ["Fixtures:"]
 
             for fixture in fixtures:
-                home_team = fixture['team_h']
-                away_team = fixture['team_a']
-                home_name = teams[home_team]['name']
+                home_team = fixture["team_h"]
+                away_team = fixture["team_a"]
+                home_name = teams[home_team]["name"]
                 home_emoji = _get_emoji(home_name)
-                away_name = teams[away_team]['name']
+                away_name = teams[away_team]["name"]
                 away_emoji = _get_emoji(away_name)
-                kickoff_time = _convert_isotime_to_local_time(fixture['kickoff_time'])
-                kickoff_string = kickoff_time.strftime('%A %d %B %Y %I:%M %p')
+                kickoff_time = _convert_isotime_to_local_time(fixture["kickoff_time"])
+                kickoff_string = kickoff_time.strftime("%A %d %B %Y %I:%M %p")
                 kickoff_hour = kickoff_time.strftime("%H")
-                fixtures_list.append(f"`{home_name: >14}` {home_emoji}` v `{away_emoji} `{away_name: <14} @ {kickoff_string: >33}` :{_get_kickoff_emoji(kickoff_hour)}:")
+                fixtures_list.append(
+                    f"`{home_name: >14}` {home_emoji}` v `{away_emoji} `{away_name: <14} @ {kickoff_string: >33}` :{_get_kickoff_emoji(kickoff_hour)}:"
+                )
 
             return "\n".join(fixtures_list)
 
