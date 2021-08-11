@@ -3,19 +3,21 @@ import os
 from datetime import datetime
 
 import discord
+import pytz
 import requests
 from dotenv import load_dotenv
 
 from keep_alive import keep_alive
 
 # LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
+LOCAL_TZ = pytz.timezone('Australia/Sydney')
 load_dotenv()
 
 client = discord.Client()
 
 
 def _convert_isotime_to_local_time(string):
-    return datetime.fromisoformat(string[:-1] + "+00:00").astimezone()
+    return datetime.fromisoformat(string[:-1] + "+00:00").replace(tz=pytz.utc).astimezone(LOCAL_TZ)
 
 
 def _get_emoji(name):
@@ -45,7 +47,7 @@ async def on_message(message):
         def _extract_time_data(data):
             for week in data:
                 gameweek_time = _convert_isotime_to_local_time(week["deadline_time"])
-                if gameweek_time > datetime.now().astimezone():
+                if gameweek_time > datetime.now().replace(tz=pytz.utc).astimezone(LOCAL_TZ):
                     return gameweek_time, week["id"]
 
         def _parse_teams(teams):
