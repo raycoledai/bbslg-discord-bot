@@ -6,6 +6,8 @@ import discord
 import requests
 from dotenv import load_dotenv
 
+from keep_alive import keep_alive
+
 # LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
 load_dotenv()
 
@@ -98,4 +100,5 @@ async def on_message(message):
         await message.channel.send("\n".join([header, fixtures]))
 
 
+keep_alive()
 client.run(os.getenv("TOKEN"))
