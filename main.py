@@ -93,7 +93,7 @@ async def on_message(message):
         )
         pl_blob_json = json.loads(pl_blob.text)
         deadline_time, gameweek = _extract_time_data(pl_blob_json["events"])
-        header = f"\nGameweek {gameweek} deadline: {deadline_time.strftime('%A %d %B %Y %I:%M %p')}\n"
+        header = f"EPL:\nGameweek {gameweek} deadline: `{deadline_time.strftime('%A %d %B %Y %I:%M %p')}`\n"
 
         teams_dict = _parse_teams(pl_blob_json["teams"])
 
