@@ -60,14 +60,16 @@ async def on_message(message):
                     return string
 
                 hour = int(hour)
+                if hour < 1:
+                    return _get_emoji("yellow_circle")
                 if hour < 2:
-                    return _get_emoji("small_orange_diamond")
+                    return _get_emoji("orange_circle")
                 if hour < 7:
-                    return _get_emoji("small_red_triangle_down")
+                    return _get_emoji("red_circle")
                 if hour < 9:
-                    return _get_emoji("small_orange_diamond")
+                    return _get_emoji("orange_circle")
                 if hour < 24:
-                    return _get_emoji("small_blue_diamond")
+                    return _get_emoji("green_circle")
                 return ""
 
             fixtures_list = ["Fixtures:"]
